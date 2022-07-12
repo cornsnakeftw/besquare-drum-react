@@ -1,0 +1,22 @@
+/** Score Display **/
+.score.container {
+  margin-bottom: 6rem;
+}
+
+.card.score-card {
+  display: inline-flex;
+  border-radius: 8px;
+  font-size: 1.4rem;
+}
+
+.score-header {
+  background-color: black;
+  color: white;
+  border-radius: 8px 0 0 8px;
+  padding: 8px 10px;
+}
+
+#score {
+  margin: auto 0;
+  padding: 0 16px;
+}

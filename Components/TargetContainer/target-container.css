@@ -1,0 +1,35 @@
+.control.container {
+  flex-wrap: wrap;
+}
+
+.control.card {
+  width: 180px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  transition: all 0.08s ease;
+}
+
+.control.card:not(:last-child) {
+  margin-right: 24px;
+}
+
+.control.card > .label {
+  background-color: black;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  text-transform: uppercase;
+  font-size: 32px;
+  padding: 16px 0;
+}
+
+.control.card > .key {
+  height: 80px;
+  text-transform: capitalize;
+  font-size: 24px;
+}
+
+.playing {
+  box-shadow: 0 10px 15px -3px rgba(0, 229, 255, 0.5),
+    0 4px 6px -4px rgba(0, 229, 255, 0.5);
+  transform: scale(1.2);
+}
