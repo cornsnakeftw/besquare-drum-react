@@ -5,40 +5,52 @@ import SequenceContainer from "../SequenceContainer";
 import TargetContainer from "../TargetContainer";
 import "./main-container.css";
 
+type RecordItem = {
+  key: string;
+  time: number;
+};
+
 const generateTargetKeys = () => {
-  const keys: { key: string; index: number }[] = [];
+  const keys: string[] = [];
   while (keys.length < 50) {
-    ["a", "s", "d", "f", "g"].forEach((k) => {
-      keys.push({ key: k, index: keys.length });
-    });
+    keys.push("a", "s", "d", "f", "g");
   }
   return keys;
 };
 
-const keys = generateTargetKeys();
+const target_keys = generateTargetKeys();
 
 type MainContainerProps = {
   has_game_started: boolean;
+  is_playback: boolean;
+  is_recording: boolean;
 };
 
 const MainContainer = ({ has_game_started }: MainContainerProps) => {
-  const [target_keys, setTargetKeys] = React.useState(keys.slice(0, 4));
   const [active_index, setActiveIndex] = React.useState(0);
   const [score, setScore] = React.useState(0);
 
-  const updateTargetKeys = () => {
-    const empty_elements = active_index < 3 ? 3 - active_index : 0;
-    setTargetKeys(keys.slice(active_index, active_index + 7 - empty_elements));
-  };
+  React.useEffect(() => {
+    if (active_index + 1 > target_keys.length) {
+      setTimeout(() => {
+        alert("Game is complete!");
+      });
+    }
+  }, [active_index]);
+
+  React.useEffect(() => {
+    if (has_game_started === false) {
+      setScore(0);
+      setActiveIndex(0);
+    }
+  }, [has_game_started]);
 
   const onKeyMatch = (keyConfig: KeyConfig) => {
     const target_key = target_keys[active_index];
     if (has_game_started) {
-      console.log(target_key.key);
-      if (target_key?.key === keyConfig.key) {
+      if (target_key === keyConfig.key) {
         setScore(score + 1);
         setActiveIndex(active_index + 1);
-        updateTargetKeys();
       } else {
         setScore(score - 1);
       }

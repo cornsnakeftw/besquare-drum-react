@@ -6,6 +6,8 @@ import MainContainer from "./Components/MainContainer";
 
 function App() {
   const [has_game_started, setStarted] = React.useState(false);
+  const [is_recording, setIsRecording] = React.useState(false);
+  const [is_playback, setIsPlayback] = React.useState(false);
 
   console.log("has_game_started", has_game_started);
   return (
