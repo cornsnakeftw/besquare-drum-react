@@ -15,8 +15,6 @@ const SequenceContainer = ({
     active_index
   );
 
-  console.log("previous_target_keys", previous_target_keys);
-
   while (previous_target_keys.length < 3) {
     previous_target_keys.unshift("");
   }
@@ -27,8 +25,6 @@ const SequenceContainer = ({
     active_index + 1,
     Math.min(active_index + 4, target_keys.length)
   );
-
-  console.log("next_target_keys", next_target_keys);
 
   while (next_target_keys.length < 3) {
     next_target_keys.push("");

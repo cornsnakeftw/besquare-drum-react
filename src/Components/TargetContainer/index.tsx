@@ -4,11 +4,10 @@ import "./target-container.css";
 
 type TargetContainerProps = {
   onKeyMatch: (keyConfig: KeyConfig) => void;
+  activeKey?: string;
 };
 
-const TargetContainer = ({ onKeyMatch }: TargetContainerProps) => {
-  const [activeKey, setActiveKey] = React.useState<string>();
-
+const TargetContainer = ({ onKeyMatch, activeKey }: TargetContainerProps) => {
   React.useEffect(() => {
     const handleKeyDown = (ev: KeyboardEvent) => {
       const key = ev.key;
@@ -17,12 +16,6 @@ const TargetContainer = ({ onKeyMatch }: TargetContainerProps) => {
 
       if (keyConfig) {
         onKeyMatch(keyConfig);
-        setActiveKey(keyConfig.key);
-        const audio = new Audio(keyConfig?.sound);
-        audio.play();
-        audio.onended = () => {
-          setActiveKey(undefined);
-        };
       }
     };
 
