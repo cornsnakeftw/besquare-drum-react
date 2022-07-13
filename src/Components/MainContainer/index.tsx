@@ -24,12 +24,14 @@ type MainContainerProps = {
   has_game_started: boolean;
   is_playback: boolean;
   is_recording: boolean;
+  setIsPlayback: (value: boolean) => void;
 };
 
 const MainContainer = ({
   has_game_started,
   is_playback,
   is_recording,
+  setIsPlayback,
 }: MainContainerProps) => {
   const [active_index, setActiveIndex] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -60,21 +62,33 @@ const MainContainer = ({
 
   React.useEffect(() => {
     if (is_playback) {
+      const promises: Promise<void>[] = [];
       recording.forEach((item) => {
-        setTimeout(() => {
-          playAudioAndHighlight(item.keyConfig);
-        }, item.time);
+        const promise = new Promise<void>((resolve, reject) => {
+          setTimeout(() => {
+            playAudioAndHighlight(item.keyConfig).then(resolve);
+          }, item.time);
+        });
+        promises.push(promise);
+      });
+
+      Promise.all(promises).then(() => {
+        setIsPlayback(false);
       });
     }
   }, [is_playback]);
 
   const playAudioAndHighlight = (keyConfig: KeyConfig) => {
     setActiveKey(keyConfig.key);
-    const audio = new Audio(keyConfig?.sound);
-    audio.play();
-    audio.onended = () => {
-      setActiveKey(undefined);
-    };
+    const promise = new Promise<void>((resolve, reject) => {
+      const audio = new Audio(keyConfig?.sound);
+      audio.play();
+      audio.onended = () => {
+        resolve();
+        setActiveKey(undefined);
+      };
+    });
+    return promise;
   };
 
   const onKeyMatch = (keyConfig: KeyConfig) => {

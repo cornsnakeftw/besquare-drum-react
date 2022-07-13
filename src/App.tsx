@@ -23,6 +23,7 @@ function App() {
         has_game_started={has_game_started}
         is_playback={is_playback}
         is_recording={is_recording}
+        setIsPlayback={setIsPlayback}
       />
     </div>
   );
